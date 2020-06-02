@@ -1,0 +1,237 @@
+Api
+faz o meio campo entre o banco de dados e aplicações externas como web, android, IOS, api, no qual traz esses dados do banco de dados e os retorna em formato json onde qualque tipo de aplicações externa consegui consumir esses dados existem api filtradas com autenticações.
+====================================================================================
+
+Arquitetura
+https://dominio.com.br/api/recurso
+
+https://dominio.com.br/api/products repare que o recurso que esta sendo trabalhado aqui que é o products está no plural e deve ficar assim
+#ou
+https://IP/api/products
+=========================================================================
+Response:
+Forma de retorno.
+JSON ou XML
+=========================================================================
+Verbos HTTP
+GET
+Obtem um recurso, retorna todos os produtos, os registros
+POST
+Inseri algo no bando
+PUT/PATH
+atualiza/edita os dados
+DELETE
+apaga
+OPTIONS
+==========================================================================
+Status code
+retorna status
+Estatos de 200 ou 204 retona sucesso
+300 redireciona
+400 cliente error página q não existe
+500 problema no servidor
+200 0k, sucesso
+201 recurso com sucesso
+204 quando deleta um registro
+304 não foi modificado o item (not midified)
+ 
+Erros
+400 Bad Request requizição não foi processada
+
+401 Unauthorized não autorizado, só usuário autorizado com token ou senha, mostra também que aquele status já foi expirado
+
+403 Forbidden quando tem vários recursos e só tem autorização para certo recurso
+404 Not Found não encontrado, essa rota não existe
+410 gone não é tão comun, recurso não existe mais, 
+
+500 internal server erro retorna um erro do servidor não esperado
+503 service unavailabel, coloca app em manutenção e ele fica nesse estado
+=============================================================================
+Versionamento
+https://dominio.com.br/api/v1/products 
+usa-se o versionamento para melhoras sem dispensar as versões antigas para que usuários antigos não fiquem na mão
+==============================================================================
+cors(cross-origin resource sharing)
+Controlar permissões de requisição
+(headers)
+é um recuso de serugança implementado pelos navegadores, que permite a comunicação entre diferentes servidores e diferentes domínios.
+este mecanismo tenta permitir as requisições feitas por vc entre os servidores, e ao mesmo tempo tenta impedir que resuisições feitas por scripts maliciosos sejam executadas sempre q é executada uma equisiçõa http para um domínio, subdomínio, porta ou protocolo.
+===============================================================================
+Tratamento de erros de forma amigável
+===============================================================================
+Middlewares
+Total de requisição/tempo
+E´importante para defeza de robôs
+================================================================================
+
+Aula 02 Ferramentas para o curso de
+
+Aula 04 comando cria model -m migration e -mc migration e controller php artisan make:model Category -m 
+na migration o laravel pede para especificar em cada item a quantidade de caracter, podemos deixar padrão, para isso vamos em Providers/AppSerivePrividers.php e na função boot() modificamos colocando: Schema::defaultStringLength(191) use Illuminate\Suport\Facades\Schema;
+
+Aula 5 faço o controller é boa prática que controlle de api fique em uma pasta Controller/Api
+rotas da api não podem ficar no arquivo web.php pq são rotas do site na routes/api pode ser feito filtragens e etc...
+Como faço para acessar rotas q estão dentro de route/api? temos um prefixo api acessamos o domínio/api(que é a rota no route/api)/categories
+levo o name para model Category.php
+
+Aula 7 cadastrar categoria inseri dados no banco
+no postman inserir http://cursolaravelapi.test/api/categories?name=jujuba
+Aula 8 editar categoria
+Aula 9 validação, formquest isolando a regra de validação, crio o request:
+php artisan make:request <nome>
+Quando a requisição é do tipo ajax o postman não reconheci, mas para uso da api, aqui vamos simular q é em vue.
+Colocamos no postman: Headers
+key: 								value:
+	Contenty							 application
+	 X-Requested-With					 XMLHttpRequest
+
+Aula 10 validar edição	vamos no controller
+no postman para editar http://cursolaravelapi.test/api/categories/6?name=jubujanra
+Aula 11 deletar criar a lógica em controller
+no postman para deletar http://cursolaravelapi.test/api/categories/9
+
+Aula 12 implementar rotas simplificadas routes/api
+usando get para ver a listagem no postaman http://cursolaravelapi.test/api/categories
+
+Aula 13 visualizar detalhes
+Vamos ao controller
+
+Aula 14 visualizar model e tabaela de produtos API laravel
+parte da gestão dos produtos 
+1 para muitos, uma categoria vários produtos e 1 produto uma única categoria
+crearemos a model Product -m de migration
+
+Aula 15 factory produtos api laravel 
+O fake é para inserir no banco dados falsos para trabalharmos com uma massa de dados q é util e vários cenários 
+Criando seeder: php artisan make:seeder UsersTableSeeder
+rodar a seed: php artisan db:seed
+criando o factory: php artisan make:factory ProductFactory  temos q seguir essa nomeclatura do nome
+e rodo o db:seed especificando qual seed qero rodar para não dar erro:
+php artisan db:seed --class=ProductsTableSeeder
+******para corrigir o erro: php artisan db:seed --class=DatabaseSeeder
+
+Aula 16 definir relacionamento entre tabelas
+criar nova coluna de 1 para muitos, a chave estrangeira sempre fica na tabela mais fraca que seria produto, logo pq uma categoria pode ter diversos produtos e um produto esta relacionado a uma única categoria nesse cenário a tabela mais fraca é produto. Vamos na tabela produto para redefinir
+
+Aula 17 listar produtos
+vamos criar na Api um ProductContronller e rota na api
+
+Aula 18 paginar produtos api, vou no controller no index e substituo o get por paginate
+
+Aula 19 filtro api 
+no postiman uso /products?name=<o nome q qero pesquisar>
+no postman para filtrar uso essa url com a palavra filter:http://cursolaravelapi.test/api/products?filter=<a palarava procurado com abreviatura>
+
+Aula 20 cadastrar produtos api fazer um cadastro de produtos vamos no ProductController delegar responsabilidades
+
+Aula 21 Editar produtos api laravel
+vamos ao ProductController no método update ele é do tipo put
+no postman:http://cursolaravelapi.test/api/products/52?name=dolores
+
+Aula 22 Validações de produtos se o funcionamento do crud estiver bem então é hora de tratar com validações.
+Vamos centralizar tudo na mesma classe no request
+No postman mudo para post e mudo para Headers q tem as config. de Content-Type e X-Requested onde eu estou simulando q essa requisição esta sendo via ajax para que nossa requisição requeste seja do tipo json
+
+Aula 23 Deletar produto
+no postman passo apenas o id q qero deletar product/id
+
+Aula 24 retornar poduto pelo id
+No controller usando o método show
+no postman passo apenas o id q qero mostrar product/id
+
+Aula 25 configuração API laravel upload de arquivos
+Precisos ir no config/filesystem 
+'default' => env('FILESYSTEM_DRIVER', 'local'), 
+vamos usar a pq ela armazena em app/public que segnifica q posso deixar os arquivos publicos, por exemplo se quiser listar essas imagens para deixa-las publicas, então mudamos de local para public 'default' => env('FILESYSTEM_DRIVER', 'public'), 
+'public' => [
+],
+criamos na pasta storage/app/public links simbólicos para ter acesso as imagens
+usamos o comando: php artisan storage:link
+usando o comando ls -l public/ verificamos q temos já configurado
+
+Aula 26 upload de arquivos api laravel
+Vamos para o productController modificar o store método
+no postiman vou em body escolho 
+
+Aula 27 alterar imagem editar produto api laravel
+Vamos ao controller no método update
+no postaman uso http://cursolaravelapi.test/api/products/2 com o id que quero indicar que quero usar para alterar
+nos item de edição coloco com 
+O método que uso é o post
+key:    _method
+value:  PUT
+
+Aula 28 deletar imagem ao deletar produto
+ProductController:
+
+04===========================
+
+Aula 29 Relacionamento Listar produtos por categoria
+Vamos na Model/Category
+Faremos o relacionamento vai retorna todos os produtos realcionados a categoria em um realcionamento de um pra muitos já que uma categoria pode ter vários produtos relacionados a ela e um produto tem apenas uma categoria.
+No postman: http://cursolaravelapi.test/api/categories/1/products o id da categoria q quero retornar e products é o recurso
+
+Aula 30 realcionamentos listar produtos e categoria fazendo o passo inverso
+ProductController.php no metodo show
+
+Aula 31 versionamento de apis
+Uns dos benefícios de trabalhar com api é o versionamento, como mudar algumas regras, criar novas melhorias e etc.
+Quando qero criar um upgrade deixo as versões antigas em routes/api
+
+Aula 32 alguns detalhes sobre configuração de api
+Vou em providers/RouteServiceProvide.php lá tem os padrões de rota posso mudar o namespace, diretório default
+
+No mapApiRoutes() temos as configurações padrão que não é recomendado pois se mexer me em coisas globais
+
+Aula 33 limitar total requisições api
+trabalhando com api uma das coisas interessantes são os filtros
+app/http/Kenel.php : em 'api' => [
+
+							'throttle:60,1', aqui representa a quantidade máxima de requisições que um mesmo cliente pode fazer em determinado tempo e o 1 é o tempo de bloqueio, por exemplo se eu for no postman e apertar o send 60 vezes em menos de um minuto serei bloqueado por 1 minuto.
+							'bindings',
+						]
+
+Aula 34 tratamento de exceções api
+Como podemos tratar o erro por exemplo o 404 vamos retornar uma erro mais amigável para isso vamos em app/exception/handler.php e em function render...
+
+Aula 35 tratamento de exceções requisições ajax
+Posso tratar erros ela sendo do tipo ajax, se der um 404 posso deixar mais amigável no caso se for ajax
+vou em app/exceptions na função render...
+
+Aula 36 tratamento de erros 
+Se quando coloco na url um verbo que não corresponde ao requisito pedido nela por exemplo uma pesquisa por id e uso o método post me retorna um erro 
+message: "", 
+"exception": "Symfony\Component\\HttpKernel"
+vou em: app/exceptions na função render...
+
+Aula 37 tratamento de cors api laravel
+Autorizar ou não requisições externas, por exemplo quais tipos de verbos http a aplicaçõa vai receber, quais servidores de origem vai poder receber requisições, posso liberar requisições apenas para um determinado client
+Trabalha com segurança desses recursos q através desse pacote podemos controlar.
+
+Crio um novo arquivo e 
+teste.html
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+vmaos para instalação do 
+
+Quando se dá o erro de cors deve ser corrigido para a página consumir aplicações externas, vamos baixar no github: (https//github.com/spatie/laravel-cors#laravel) um pacote por linha de comando:
+composer require spatie/laravel-cors
+
+Em seguida ire em app/http/Kernel em 
+			protected $middlewareGroups = [
+				'api' => [
+					\Spatie\Cors\Cors::class,
+				],
+			];
+
+Podemos configurar mais ainda para escolher qual verbo aceitar por exemplo
+Usando o comando em linha:
+php artisan vendor:publish --provider="Spatie\Cors\CorsServiceProvider" --tag="config" que é gerado dentro de config/cors
+
+
+Aula 38 tradução de apis
+Pacote de tradução para as mensagens
+Link github: hpps://github.com/caouecs/laravel-lang
+em src tem várias pastas uma pt-br q traduz, podemos clonar copiando a url
+na linha de comando rodo: git clone https://github.com/caouecs/laravel-lang.git
+com comando ls podemos ver 
+copio da poasta laravel-lang/rsc/pt-br para a pasta resource/lang e colo essa pasta e posso deletar o repositório q clonei inteiro agora vou para config/app e mudo em locate = 'pt-BR' e também fallback_locale
