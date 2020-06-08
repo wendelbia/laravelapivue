@@ -33,10 +33,13 @@ import FormCategoryComponent from './partials/FormCategoryComponent'
 		created () {
 			//this.id é o da props loadCategory
 			this.$store.dispatch('loadCategory', this.id)
-							.then(response => this.category = response)
-							.catch(error => {
-								console.log(error)
-							})
+				.then(response => {
+				    console.log(response)
+				    this.category = response
+				})
+				.catch(error => {
+				    console.log(error)
+				})
 		},
 		/*crio o nosso data que pega dos dados da categoria lá no formaulário*/
 		data () {
