@@ -10,6 +10,9 @@
 				<!--já q nossos components estão relacionados uns com os outros por causa do vuex posso usar nossas categoias estão centralizadas em um único estado posso usar uma propriedade computada chamada total-->
 				<router-link :to="{name: 'admin.categories'}" class="nav-link">Categorias ({{totalCategories}})</router-link>
 			</li>
+			<li>
+				<router-link :to="{name: 'admin.products'}" class="nav-link">Produtos</router-link>
+			</li>
 		</ul>
 		<!--Sou o template de admin-->
 		<!--usando o <router-view> para rotear as admin's -->

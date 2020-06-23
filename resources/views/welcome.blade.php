@@ -18,6 +18,8 @@
     </head>
     <body ><!--vamos incluir antes do </body> o a meta-tag-->
         <div id="app">
+            <!--notify-->
+            <vue-snotify></vue-snotify>
             <!--component para carregamento de página de forma global-->
             <preloader-component></preloader-component>
             <!--A7

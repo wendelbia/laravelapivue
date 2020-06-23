@@ -1,4 +1,5 @@
 
+
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
@@ -7,6 +8,13 @@
 
 // Bootstrap se não for trabalhar com o boots posso apagar
 @import '~bootstrap/scss/bootstrap';
+
+//snotify
+@import "~vue-snotify/styles/material";
+
+// include animation styles
+@import "~vodal/common.css";
+@import "~vodal/rotate.css";
 
 .navbar-laravel {
   background-color: #fff;

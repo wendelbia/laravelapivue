@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import Categories from './modules/categories/categories'
 //importar o preloader
 import preloader from './modules/preloader/preloader'
+import products from './modules/products/products'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,8 @@ const store = new Vuex.Store({
 	modules: {
 		//por si só não tem vínculo com o nosso start que é o app.js nem com o nosso boostrap.js então devemos incluí-lo no nosso view, vou no app.js
 		categories: Categories,
-		preloader
+		preloader,
+		products,
 
 	}
 

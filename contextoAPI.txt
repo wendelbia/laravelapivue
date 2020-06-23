@@ -391,7 +391,77 @@ para isso crio uma pasta chamada partials e coloco todo que posso reutilizar.
 
 Aula 12 cadastar e editar category
 
+Aula 13 instalar e configurar  o vue-snotify, import no app.js e insiro no blade
+vou em assets/sass/app.scss pode escolher outros estilos além do matiral, em node_modules/vue-snotify/style como dark, simple e etc...
 
+Aula 16 Deletar Categoria
+Vamos em catecorieComponent
+
+Aula 17 Confirmar deletar categoia 
+
+Aula 18 filtro de categorias
+
+=======================================================================
+ 03 admin/Categorias
+======================================================================
+Aula 01 preparar compoents vuex
+em pages no admin
+criamos ProductsComponents
+
+Aula 02 carregar produtos 
+
+Aula 03 lista produtos
+
+Aula 04 paginação simples
+
+Aula 05 paginação com component, mais completa
+
+Aula 06 filtrar produtos
+
+Aula 07 intalar e configurar o vodal
+Baixar tipos de vodal: https://github.com/chenjiahan/vodal 
+Demo: https://chenjiahan.github.io/vodal/
+Para instalar:
+npm install --save-dev vodal
+
+Vou em resource/sass/app.scss
+e importo e incluio o (~)
+
+// include animation styles
+@import "~vodal/common.css";
+@import "~vodal/rotate.css";
+
+Depois disso já posso usar e para isso importo e uso desta forma
+
+<vodal :show="show" animation="rotate" @hide="show = false">
+    <div>A vue modal with animations.</div>
+</vodal>
+import Vue from 'vue';
+import Vodal from 'vodal';
+
+Vue.component(Vodal.name, Vodal);
+
+export default {
+  name: 'app',
+    
+  data() {
+    return {
+      show: false
+    }
+  }
+}
+
+Aula 08 modal de cadastro de produto 
+
+Aula 09 cadastro de produto modal
+
+Aula 10 fechar modal e listar produtos 
+
+Aula 11 resetar formulário de erros 
+
+Aula 12 carregar categorias automaticamente
+
+Aula 13 preparar edição de produto
 
 
 

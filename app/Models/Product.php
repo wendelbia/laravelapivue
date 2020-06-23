@@ -51,7 +51,7 @@ class Product extends Model
     public function getResults($data, $total)
     {
     	if (!isset($data['filter']) && !isset($data['name']) && !isset($data['description']))
-    		return $this->paginate($total);
+    		return $this->orderBy('id', 'DESC')->paginate($total);
         
     	
     	
@@ -71,6 +71,7 @@ class Product extends Model
     			$query->where('description', 'LIKE', "%{$description}%");
             }
     	})
+        ->orderBy('id', 'DESC')
         ->paginate($total);
 
     }

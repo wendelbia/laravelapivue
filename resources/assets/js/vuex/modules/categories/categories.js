@@ -24,9 +24,13 @@ export default {
 	actions: {
 		//uma vez que deu certo passo para o mutations que vai alterar o nosso estado, ele pega o response e altera o nosso estado de items: {} por padrão o método action recebe o context
 
-		loadCategories (context) {
+		//loadCategories (context) {
+		//modifico a loadCategories colocando um parâmetro
+		loadCategories(context, params) {
 			context.commit('PRELOADER', true)
-			axios.get('/api/v1/categories')
+			//axios.get('/api/v1/categories')
+			//adiciono um parâmetro aqui também
+			axios.get('/api/v1/categories', {params})
 				.then(response => {
 					console.log(response)
 					//vou chamar o mutations e passo para ele response q é o próprio retorno da api
@@ -102,7 +106,24 @@ export default {
 					.catch(error => reject(error))
 					.finally(() => context.commit('PRELOADER', false))
 				})
-		}
+		},
+
+		 destroyCategory (context, id) {
+		 	context.commit('PRELOADER', true)
+		 	//crio um objeto da PROMISE  cruio um callback 
+			return new Promise((resolve, reject) => {
+				//se retornar resolve deu certo posso retorna a flha também com reject
+				//passo essa requisição ajax para dentro dele
+				//passo apens o id da categoria e sem o parâmetro
+				axios.delete(`/api/v1/categories/${id}`)
+				//se deu certo resolver
+					.then(response => resolve())
+				//se deu errado retorno o próprio erro reject(error)
+					.catch(error => reject(error))
+					//ele não espera o preload acabar e já deleta então será removido
+					//.finally(() => context.commit('PRELOADER', false))
+				})	
+		 }
 	},
 	//recuperar nossas state's
 	getters: {

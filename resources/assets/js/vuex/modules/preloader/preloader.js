@@ -10,7 +10,7 @@ export default {
 			//o estado chama o status que recebe o tipo de status false o true
 			state.loading = status
 		}
-	},
+	}
 	/*actions: {
 		//não precisa de nenhum actions 
 		//vou em store.js para incluí-lo

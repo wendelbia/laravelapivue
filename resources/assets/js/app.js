@@ -4,6 +4,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+//importando o snotify
+import Snotify from 'vue-snotify'
+
 //importação da router e o arquivo
 import router from './routes/routers'
 //importo o store
@@ -14,6 +17,11 @@ import store from './vuex/store' //coloco no vue.js
 //admin/que é o nosso prefixo
 Vue.component('admin-component', require('./components/admin/AdminComponent'))
 //vou no arquivo de view welcome e troco a tag
+
+//configurando
+Vue.use(Snotify, {toast: {showProgressBar:false}})
+//vamos coloca-lo no blade
+
 
 //aqui declaro os componentes globais q posso usar em qualquer lugar inclusive nos nosso templets
 //Vue é a variável criada lá em window.Vue e component(<aqui qualquer nome>), require('./o endereço do arquivo vue.js')
@@ -38,4 +46,6 @@ const app = new Vue({
 	store,
     el: '#app'
 });
+//para carregar as categorias
+store.dispatch('loadCategories')
 
