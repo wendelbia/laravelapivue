@@ -34,7 +34,6 @@ import FormCategoryComponent from './partials/FormCategoryComponent'
 
 			//passo tudo isso para o methods: { ... }
 			//this.id é o da props loadCategory
-<<<<<<< HEAD
 			/*this.$store.dispatch('loadCategory', this.id)
 							.then(response => this.category = response)
 							.catch(error => {
@@ -46,7 +45,7 @@ import FormCategoryComponent from './partials/FormCategoryComponent'
 								console.log(error)
 							}) e agora chamo o método*/
 			this.loadCategory()
-=======
+
 			this.$store.dispatch('loadCategory', this.id)
 				.then(response => {
 				    console.log(response)
@@ -55,7 +54,6 @@ import FormCategoryComponent from './partials/FormCategoryComponent'
 				.catch(error => {
 				    console.log(error)
 				})
->>>>>>> a5acfb5946120b310c4f69230ca1003aeead813a
 		},
 		/*crio o nosso data que pega dos dados da categoria lá no formaulário*/
 		data () {
@@ -90,9 +88,8 @@ import FormCategoryComponent from './partials/FormCategoryComponent'
 </script>
 
 <style scoped>
-<<<<<<< HEAD
+
 
 </style>
-=======
+
 </style>
->>>>>>> a5acfb5946120b310c4f69230ca1003aeead813a

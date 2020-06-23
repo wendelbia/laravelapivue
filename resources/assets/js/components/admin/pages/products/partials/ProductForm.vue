@@ -12,7 +12,7 @@
 			<!-- usando has podemos formatar o css-->
 			<div :class="['form-group', {'has-error': errors.description}]">
 				<!--no console do browse tenho o name que recebe o array que tem as propriedades do campo name que na posição zero tem o item que é a mensagem de erro faço um if para exibir a mensagem, ele mostra um erro de cadas vez, vamos pegar o da posição zero-->
-				<div v-if="errors.name">{{ errors.name[0] }}</div>
+				<div v-if="errors.description">{{ errors.description[0]}}</div>
 				<textarea v-model="product.description" cols="30" rows="10" class="form-control" placeholder="descrição do produto"></textarea>
 			</div>
 
@@ -57,7 +57,7 @@ export default {
 					description: '',
 					//image: '',
 					//esse deve ser de um id existente
-					category_id: '',
+					category_id: 12,
 				}
 			}
 		}
@@ -103,7 +103,7 @@ export default {
 					description: '',
 					//image: '',
 					//esse deve ser de um id existente
-					category_id: '23',
+					category_id: '',
 				}
 		}
 
