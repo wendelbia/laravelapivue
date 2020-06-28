@@ -48,7 +48,7 @@ class StoreUpdateProductFormRequest extends FormRequest
             //mudados para aspas duplas, dizemos q ele é (unique) unico da tabela produtos onde a coluna é name e passo o valor que ele faça a exeção caso seja o mesmo eu pego o $this->id que é o mesmo id da requisição q estão enviando para cá e a coluna q qero varificar que é id
             'name'          => "required|min:3|max:20|unique:products,name,{$id},id",
             'description'   => 'max:1000',
-            'image'         => 'image',
+           // 'image'         => 'image',
         ];
     }
     //classe criada adiciono no ProductController

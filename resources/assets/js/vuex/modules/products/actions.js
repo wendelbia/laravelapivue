@@ -44,6 +44,7 @@ export default {
 		return new Promise((resolve, reject) => {
 		axios.get(`${URL_BASE}${RESOURCE}/${id}`)
 		//resolve que é o do Promise passando o response.data q é o item em si se debugar retornará um ponto data
+		//retorna o response com o resolve que tem todos os dados do product
 			.then(response => resolve(response.data))
  			//se der erro retornará o reject()
 			.catch(error => reject())
@@ -58,7 +59,21 @@ export default {
 			axios.post(`${URL_BASE}${RESOURCE}`, params)
 				.then(response => resolve())
 				.catch(error => reject(error.response))
-				.finally(() => context.commit('PRELOADER', false))
+				//.finally(() => context.commit('PRELOADER', false))
+		})
+	},
+
+	updateProduct (context, params) {
+		context.commit('PRELOADER', true)
+
+		return new Promise((resolve, reject) => {
+			axios.put(`${URL_BASE}${RESOURCE}/${params.id}`, params)
+				.then(response => resolve())
+				.catch(error => {
+					context.commit('PRELOADER', false)
+					reject(error.response)
+				})
+				//.finally(() => context.commit('PRELOADER', false))
 		})
 	}
 }

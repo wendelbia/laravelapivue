@@ -23,14 +23,15 @@
 				:width="700"
 				:height="600">
 				<!--evento para fechar o modal
+					passa o product da props do ProductForm.vue que recebe o product propriedade do data(){} do ProductComponent
 					passo o product que por default sempre vou estar passando esse valores vazios lá do data(){}
 					update está enviando o valor de false
 				-->
-				<product-form
-				:product="product"
-				:update="update"
-				@success="success">
-				</product-form>	
+				<product-form 
+					:prod="product" 							
+					:update="update" 
+					@success="success">
+					</product-form>
 				</vodal>
 			</div>
 			<div class="col">
@@ -85,10 +86,12 @@ se a últama página for maior do que 1
 </template>
 
 <script>
-	//importando o formulário
-	import ProductForm from './partials/ProductForm'
 	//importando o modal
 	import Vodal from 'vodal'
+
+	//importando o formulário
+	import ProductForm from './partials/ProductForm'
+	
 	//importando o component para paginação
 	import PaginationComponent from '../../../layouts/PaginationComponent'
 	//chamando o component de pesquisa em admin/layouts/SeachComponent
@@ -96,6 +99,7 @@ se a últama página for maior do que 1
 	//vuex vai controllar todos os estados dos produtos
 	//crio em vuex/modules/produtos
 	export default {
+		
 		created () {
 			//chamo o método 
 			//this.loadProducts()
@@ -111,12 +115,12 @@ se a últama página for maior do que 1
 				//propriedade para edit com os valores default
 				//e passo esse product para o formuláio lá no @success=""><
 				product: {
-					id: '',
-					name: '', 
-					description: '',
-					//image: '',
-					//esse deve ser de um id existente
-					category_id: '',
+							id: '',
+							name: '', 
+							description: '',
+							//image: '',
+							//esse deve ser de um id existente
+							category_id: '',
 				},
 				update: false,
 			}
@@ -152,43 +156,25 @@ se a últama página for maior do que 1
 				//this.$store.dispatch('loadProducts')
 				//incluindo um parâmetro para a paginação, só de incluí-lo consulta os produtos e já é passado para a propriedade comutada os itens da página 1
 				this.$store.dispatch('loadProducts', {...this.params, page})
-
 			},
 			edit (id) {
+				//chamo o método loadProduct da action que passa como parâmetro o id
 				this.$store.dispatch('loadProduct', id)
+					//retorna o then e o catch
 								.then(response => {
 									//o product da props que recebe os valores por default receberá da api os valores da response
-									this.product = response
+									this.product = response.product
 									//para mostar o modal passo ele para true pois seu valor default esta false
 									this.showModal = true
 									//passando o update para true para informar q vou atualizar
 									this.update = true
+
+									//this.prod = this.product
 								})
 								.catch(() => {
 									this.$snotify.error('Algo Errado', 'Erro')
 								})
 			},
-			/*editar
-			edit (id) {
-				//crio uma action para fazê-lo
-				this.$store.dispatch('loadProduct', id)
-						.then(response => {
-						//aqui pego o product que criei q é o data vai receber o response que é os dados que vem da api então aqui é o valor que quero editar
-						this.product = response
-						//e para mostar o modal eu o chamo e passo para true
-						this.showModal = true
-						//passo o update para true que infoma q quero autorizar atualizar 
-						this.update = true 
-						})
-						.catch(() => {
-							this.$snotify.error('Algo errado', 'Erro')
-						})
-						//se formos em ProductForm temos um props que é opcional que posso passar o produto em si
-						//no data(){} vamos criar uma propriedade product aqwui
-			},*/
-			//método para pesquisa
-			//tem como parâmetro o filter e enviariará esse parâmetro para a pesquisa
-			//temos em nossa propriedade computada um parâmetro que retorna um objeto, para enviar tudo isso criamos o date () {...}
 			searchForm (filter) {
 				//pegamos a propriedade search lá do data(){...}
 				this.search = filter
@@ -206,7 +192,7 @@ se a últama página for maior do que 1
 			success () {
 				//chamo o método que já está pronto
 				this.hideModal()
-				//atualizao
+				//atualizao vai pra primeira página
 				this.loadProducts(1)
 			}
 		},
@@ -219,6 +205,7 @@ se a últama página for maior do que 1
 
 		}
 	}
+
 </script>
 
 <style scoped>

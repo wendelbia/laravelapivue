@@ -14,7 +14,7 @@ Vue.use(Vuex)
 //export default store = new Vuex.Store({ 
 //ou esportar a variável store
 const store = new Vuex.Store({
-	//passo as config, posso passar aqui várias stats, mutations, actions, gettes... mas é melhor separar tudo isso deixando mais limpo, pois trabalharemos com módulos	state: {}
+	//passo as config, posso passar aqui várias states, mutations, actions, gettes... mas é melhor separar tudo isso deixando mais limpo, pois trabalharemos com módulos	state: {}
 	//portanto crio em vuex/modules/categories/
 	modules: {
 		//por si só não tem vínculo com o nosso start que é o app.js nem com o nosso boostrap.js então devemos incluí-lo no nosso view, vou no app.js

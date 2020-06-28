@@ -12,7 +12,7 @@
 			<!-- usando has podemos formatar o css-->
 			<div :class="['form-group', {'has-error': errors.description}]">
 				<!--no console do browse tenho o name que recebe o array que tem as propriedades do campo name que na posição zero tem o item que é a mensagem de erro faço um if para exibir a mensagem, ele mostra um erro de cadas vez, vamos pegar o da posição zero-->
-				<div v-if="errors.description">{{ errors.description[0]}}</div>
+				<div v-if="errors.description">{{ errors.description[0] }}</div>
 				<textarea v-model="product.description" cols="30" rows="10" class="form-control" placeholder="descrição do produto"></textarea>
 			</div>
 
@@ -28,7 +28,7 @@
 			</div>
 
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Enviar</button>
+				<button type="submit" class="btn btn-primary" @click="$emit('product')">Enviar</button>
 			</div>
 		</form>
 	</div>
@@ -48,8 +48,11 @@ export default {
 			default: false
 		},
 		product: {
+			//requered é usado para definir que aquela propriedade deve ser recebida, isto é ela é obrigatória 
 			require: false,
+			//type é usado para garantir que somente aquele tipo de dado será passado para o componente. é altamente recomendado usá-lo para evitar side-effects. Ele aceita os seguintes tipos: string, number, boolean, function, obejct, array e symbol
 			type: Object,
+			//default é usado para definirmos um valor padrão para aquela propriedade, caso a prop seja inexistente
 			default: () => {
 				return {
 					id: '',
@@ -57,7 +60,7 @@ export default {
 					description: '',
 					//image: '',
 					//esse deve ser de um id existente
-					category_id: 12,
+					category_id: '',
 				}
 			}
 		}
@@ -75,17 +78,24 @@ export default {
 	},
 	methods: {
 		onSubmit () {
+			//se quisermos atualizar então updateProduct se não storeProduct
+			let action = this.update ? 'updateProduct' : 'storeProduct'
 			//this.product fará o two-way-data-bind, conforme for digitando os valores ele vai atualizando o product:{}
-			this.$store.dispatch('storeProduct', this.product)
+			//this.$store.dispatch('storeProduct', this.product)
+
+			//agora vamos deixar mais genérico essa ordem 
+			this.$store.dispatch(action, this.product)
 			//agora criar uma action para gravar produto
 					.then(() => {
-						this.$snotify.success('Sucesso ao cadastrar')
+						this.$snotify.success('Sucesso ao Enviar')
 
 						//chamando o método reset () {}
 						this.reset ()
 						//confirmando que está ok
 						//vou no coponent que despara lá em ProductComponent
-						this.$emit('success')	
+						this.$emit('success')
+						this.$emit(prod())
+
 					})
 					.catch(errors => {
 						this.$snotify.error('Algo está Errado', 'Erro')
@@ -105,8 +115,17 @@ export default {
 					//esse deve ser de um id existente
 					category_id: '',
 				}
+		},
+		prod () {
+			this.product = {
+					id: '',
+					name: '', 
+					description: '',
+					//image: '',
+					//esse deve ser de um id existente
+					category_id: '',
+				}
 		}
-
 	}
 }
 	
