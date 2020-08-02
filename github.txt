@@ -1,3 +1,8 @@
+meu git:  
+https://github.com/wendelbia/laravel
+senha: 1BIAbiabia
+senha no terminal: fdsaasdf
+
 Funções de versionadores de código para as várias versões de um software:
 .Organizar
 .Distribuir

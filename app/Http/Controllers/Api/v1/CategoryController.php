@@ -16,6 +16,11 @@ class CategoryController extends Controller
 	public function __construct(Category $category)
 	{
 		$this->category = $category;
+        //para algumas função se faz necessário aplicar o middleware portanto posso utilizar o only() para especificar quais métodos passaram pelo o filtro ou o except() para quais não vão passar
+        $this->middleware('auth:api')->except([
+         //passo o array expecificando quais não passaram:
+            'index',  
+        ]);
 	}
 
     //crio função q retorna todos dados do banco

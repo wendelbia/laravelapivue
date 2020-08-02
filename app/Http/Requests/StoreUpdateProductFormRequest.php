@@ -36,7 +36,10 @@ class StoreUpdateProductFormRequest extends FormRequest
         */
         //dd$this->segment(3);
         //vamos armazenar em uma variável 
-        $id = $this->segment(3);
+       // $id = $this->segment(3);
+        $id = $this->id;
+        //dará um erro pois pegamos o segmento na posição 3 como voi adicionado v1 na url /api/v1/products/12 então não está mais na posição 3 mas sim na 4 podemos incluir o 4 no lugar do 3 ou apenas colocar id
+
 
         return [
             //informo também a categoria que o produto está relacionado
@@ -48,7 +51,7 @@ class StoreUpdateProductFormRequest extends FormRequest
             //mudados para aspas duplas, dizemos q ele é (unique) unico da tabela produtos onde a coluna é name e passo o valor que ele faça a exeção caso seja o mesmo eu pego o $this->id que é o mesmo id da requisição q estão enviando para cá e a coluna q qero varificar que é id
             'name'          => "required|min:3|max:20|unique:products,name,{$id},id",
             'description'   => 'max:1000',
-           // 'image'         => 'image',
+            'image'         => 'image',
         ];
     }
     //classe criada adiciono no ProductController

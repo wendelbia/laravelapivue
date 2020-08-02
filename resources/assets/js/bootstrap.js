@@ -1,4 +1,4 @@
-
+import { NAME_TOKEN } from './config/configs'
 
 try {
 	//apago esse aquivo também pois todos q não estiver utilizando faço o memso pois te-lós requer espaço
@@ -32,3 +32,11 @@ if (token) {
 }
 
 //agora vamos para os aquivos sass em _variables.scss
+
+//aqui pego o token importo a contante lá em cima
+const tokenAccess = localStorage.getItem(NAME_TOKEN)
+	//VERIFICO SE PEGOU 
+	if (tokenAccess)
+		//se tiver pego retorno e envio como header(cabeçalho das nossa configurações por padrão)
+		//envio aqui na requisição a autorização e o tokenA
+		window.axios.defaults.headers.common['Authorization'] = `Bearer ${tokenAccess}`;

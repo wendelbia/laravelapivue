@@ -49,3 +49,12 @@ const app = new Vue({
 //para carregar as categorias
 store.dispatch('loadCategories')
 
+//a lógica daqui foi feita no auth.js
+//para checar se o usu existe para poder continuar logado depois de um refresh
+store.dispatch('checkLogin')
+//posso redirecionar se der certo 
+	//.then(() => router.push({name: 'admin.dashboard'}))
+	.then(() => router.push({name: store.state.auth.urlBack}))
+//pegando o token como posso enviá-lo?
+//vou no booststrap.js onde temo window.axios.defaults... 
+

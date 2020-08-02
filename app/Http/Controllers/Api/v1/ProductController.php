@@ -27,6 +27,11 @@ class ProductController extends Controller
     public function __construct(Product $product)
     {
         $this->product = $product;
+        //para algumas função se faz necessário aplicar o middleware portanto posso utilizar o only() para especificar quais métodos passaram pelo o filtro ou o except() para quais não vão passar
+        $this->middleware('auth:api')->except([
+         //passo o array expecificando quais não passaram:
+            'index', 'show'   
+        ]);
     }
 
     #==================================================================

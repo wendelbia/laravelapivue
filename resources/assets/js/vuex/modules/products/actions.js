@@ -12,6 +12,14 @@ import { URL_BASE } from '../../../config/configs'
 
 const RESOURCE = 'products'
 
+//propriedade para configuração dos readers
+const CONFIGS = {
+	headers: {
+		'content-type': 'multipart/form-data',
+	}
+
+}
+
 export default {
 	//incluo mais um parêmetro para a paginação simples
 	//loadProducts (context) {
@@ -51,7 +59,7 @@ export default {
 			.finally(() => context.commit('PRELOADER', false))
 		})
 	},
-
+/*vamos mudar para adptá-lo para o formData e acrescentamos o upload de imagem
 	storeProduct (context, params) {
 		context.commit('PRELOADER', true)
 
@@ -62,12 +70,32 @@ export default {
 				//.finally(() => context.commit('PRELOADER', false))
 		})
 	},
+*/
 
-	updateProduct (context, params) {
+	storeProduct (context, formData) {
 		context.commit('PRELOADER', true)
 
 		return new Promise((resolve, reject) => {
-			axios.put(`${URL_BASE}${RESOURCE}/${params.id}`, params)
+			//para o upload de imagem preciso passar um 3º parâmetro de imgagem para especificar que é a configuração de reader, criamos uma var lá em cima que são as configurações
+			//confiro na pasta storage se foi inserido algum arquivo
+			axios.post(`${URL_BASE}${RESOURCE}`, formData, CONFIGS)
+				.then(response => resolve())
+				.catch(error => reject(error.response))
+				//.finally(() => context.commit('PRELOADER', false))
+		})
+	},
+
+
+	//updateProduct (context, params) {
+		//vamos mudar para atualizar a imagem
+		updateProduct (context, formData) {
+		context.commit('PRELOADER', true)
+		//para usar um parâmetro adicional, uso o append 
+		formData.append('_method', 'PUT')
+		return new Promise((resolve, reject) => {
+			//axios.put(`${URL_BASE}${RESOURCE}/${params.id}`, params)
+			//para pegar o id do produto tenho que usar o get por usar a classe formData e preciso usar a requisição do tipo post para isso uso um parâmetro adicional 
+			axios.post(`${URL_BASE}${RESOURCE}/${formData.get('id')}`, formData)
 				.then(response => resolve())
 				.catch(error => {
 					context.commit('PRELOADER', false)
@@ -75,5 +103,20 @@ export default {
 				})
 				//.finally(() => context.commit('PRELOADER', false))
 		})
+	},
+
+	destroyProduct (context, id) {
+		context.commit('PRELOADER', true)
+		return new Promise((resolve, reject) => {
+			axios.delete(`${URL_BASE}${RESOURCE}/${id}`)
+				.then(response => resolve())
+				//dando erro, é bom finalizar o preload no catch
+				.catch(error => {
+					reject()
+					context.commit('PRELOADER', false)
+				})
+				//.finally(() => context.commit('PRELOADER', false))
+		})
+
 	}
 }

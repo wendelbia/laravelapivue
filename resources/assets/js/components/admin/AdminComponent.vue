@@ -13,12 +13,21 @@
 			<li>
 				<router-link :to="{name: 'admin.products'}" class="nav-link">Produtos</router-link>
 			</li>
+			<li>
+				<router-link :to="{name: 'products.reports'}" class="nav-link">Relatório de Produtos</router-link>
+			</li>
+			<li>
+				<a href="#" class="nav-link">
+				{{ me.name}} (<a href="#" @click.prevent="logout">sair</a>)
+				</a>
+			</li>
 		</ul>
 		<!--Sou o template de admin-->
 		<!--usando o <router-view> para rotear as admin's -->
 		<!--agora implemento a parte de categoria vou em pages-->
 		<div class="container">
-			<router-view></router-view>
+			<router-view>
+			</router-view>
 			<!--vou em categoriesComponent e coloco um título para saber que página estou -->
 		</div>
 		
@@ -31,6 +40,20 @@
 			totalCategories () {
 				//objeto store busca em state de categories.js o estado categories onde dentro dele temos items e pego a data em si que tem os dados e quantifico
 				return this.$store.state.categories.items.data.length
+			},
+
+			
+			me () {
+				return this.$store.state.auth.me
+			}
+
+		},
+
+		methods: {
+			logout () {
+				this.$store.dispatch('logout')
+
+				this.$router.push({name: 'login'})
 			}
 		}
 	}

@@ -12,6 +12,7 @@ $this->put('categories/{id}', 'Api\CategoryController@update');
 $this->delete('categories/{id}', 'Api\CategoryController@delete');
 */
 //usamos o recurso categories q é a url q eu qero trabalhar e passo o nosso controller resource, logo depois posso passar uma array, mas a partir do laravel 5.6 o laravel trouxe o apiResource ele vai enternder a funções de cada método
+
 //--------------------------------------------------------------------------
 //antes de agrupar
 /*
@@ -69,20 +70,34 @@ $this->group([
 	//rota para retornar todos os produtos de uma categoria
 	//passo id dinamicamente categories vai a url depois o id que quero retornar da categoria e recursos q qero retornar dessa categoria q no caso é products é crio esse método product no CategoryController
 	$this->get('categories/{id}/products', 'CategoryController@products');
+	//rota para o relatório
+	$this->get('reports-products', 'ReportController@products');
 
 });
-//jwt
-//vamos deixá-lo fora do grupo de rotas pois não faz parte do versionamento, mas poderiamos deixá-lo no grupo agrupando as outras pois tem o Api\v1
-//rota para autenticação, aponto para o método 
-$this->post('auth', 'Auth\AuthApiController@authenticate');
 
-//rota para a autenticação de usuário
-$this->get('me', 'Auth\AuthApiController@getAuthenticatedUser');
-//no postma: http://cursolaravelapi.test/api/me dará um erro pois não tenho o token
-//em headers coloco na key: Authorization em value: Bearer em uma nova aba digito na url: email, password... como método get para obter o token
 
-//rota para aumentar o prazo para login após expirar
-$this->post('auth-refresh', 'Auth\AuthApiController@refreshToken'); 
-//vamos ao controller api
+$this->group(['namespace' => 'Auth\Api'], function () {
+
+	//jwt
+	//vamos deixá-lo fora do grupo de rotas pois não faz parte do versionamento, mas poderiamos deixá-lo no grupo agrupando as outras pois tem o Api\v1
+	//rota para autenticação, aponto para o método 
+	$this->post('auth', 'AuthApiController@authenticate');
+
+	//rota para a autenticação de usuário
+	$this->get('me', 'AuthApiController@getAuthenticatedUser');
+	//no postma: http://cursolaravelapi.test/api/me dará um erro pois não tenho o token
+	//em headers coloco na key: Authorization em value: Bearer em uma nova aba digito na url: email, password... como método get para obter o token
+
+	//rota para aumentar o prazo para login após expirar
+	$this->post('auth-refresh', 'AuthApiController@refreshToken'); 
+	//vamos ao controller api
+	//------------------------------------------------------------------------
+	//vamos criar uma rota para registrar um novo usu
+	$this->post('register', 'ProfileApiController@register');
+	//método para editar
+	$this->put('update', 'ProfileApiController@update');//no postman para teste coloco essa rota que é update
+
+});
+
 
 
